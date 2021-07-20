@@ -8,7 +8,7 @@ class App extends React.Component {
     this.state = {
       isClicked: false,
       todos: [],
-      text: "",
+      text: ""
     }
   }
 
@@ -21,31 +21,26 @@ class App extends React.Component {
       isClicked: true
     })
     console.log(this.state.isClicked)
-    this.state.todos.push(this.state.text)
+
     this.setState({
-      todos: [...this.state.todos, {id: this.state.todos.length + 1, text: this.state.text}],
+      todos: [...this.state.todos, { id: this.state.todos.length + 1, text: this.state.text }],
       isClicked: false,
       text: ""
     })
   }
 
-  handleClick = (id) => {
+  handleClick = (evt, id) => {
     console.log(id)
-    let foundIndex = this.state.todos.findIndex((todo) => {
-       return todo.id === id
-    })
-
-    const copy = {...this.state.todos}
+    const foundIndex = this.state.todos.findIndex(todo => todo.id === id)
+    const copy = [...this.state.todos]
     copy.splice(foundIndex, 1)
-    this.setState({todos: copy})
+    this.setState({ todos: copy })
     console.log(foundIndex)
   }
 
-
   handleChange = event => {
     this.setState({
-      text: event.target.value,
-      
+      text: event.target.value
     })
   }
 
@@ -56,11 +51,11 @@ class App extends React.Component {
         <input type="text" onChange={this.handleChange} />
         <div>
           <ul>
-            {this.state.todos.map(todo => {
+            {this.state.todos.map(({ text, id }) => {
               return (
                 <li>
-                  <h3>{todo}</h3>
-                   <button onClick={(evt) => this.handleClick(evt, id)}>Delete</button>
+                  <h3>{text}</h3>
+                  <button onClick={evt => this.handleClick(evt, id)}>Delete</button>
                 </li>
               )
             })}
